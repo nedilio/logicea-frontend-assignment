@@ -1,7 +1,7 @@
 ﻿import { Route } from "wouter";
-import Jokes from "./Table";
-import Login from "./Login";
-import Form from "./Form";
+import Jokes from "./components/Table";
+import Login from "./components/Login";
+import JokeForm from "./components/JokeForm";
 const App = () => {
   return (
     <>
@@ -12,10 +12,10 @@ const App = () => {
         <Jokes />
       </Route>
       <Route path="/joke/:id">
-        <Form />
+        <JokeForm />
       </Route>
       <Route path="/joke">
-        <Form />
+        <JokeForm />
       </Route>
     </>
   );

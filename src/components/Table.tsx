@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getJokes, logout } from "./services";
-import { Joke } from "./types";
+import { getJokes, logout } from "../services";
+import { Joke } from "../types";
 import { useLocation, Link } from "wouter";
 
 import {

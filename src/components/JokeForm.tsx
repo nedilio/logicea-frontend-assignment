@@ -1,8 +1,8 @@
 ﻿import { useEffect, useState } from "react";
 import { useRoute, Link } from "wouter";
-import { getJokeById } from "./services";
-import { Joke } from "./types";
-const Form = () => {
+import { getJokeById } from "../services";
+import { Joke } from "../types";
+const JokeForm = () => {
   const [match, params] = useRoute("/joke/:id");
   const [joke, setJoke] = useState<Joke | null>(null);
   useEffect(() => {
@@ -24,4 +24,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default JokeForm;

@@ -1,7 +1,7 @@
 ﻿import { Button } from "@tremor/react";
 import { useLocation } from "wouter";
 import { useEffect } from "react";
-import { login } from "./services";
+import { login } from "../services";
 
 const Login = () => {
   const [location, setLocation] = useLocation();
