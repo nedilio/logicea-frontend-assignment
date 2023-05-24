@@ -17,7 +17,7 @@ interface Filters {
 }
 
 interface SortBy {
-  label: "views" | "date";
+  label: "Views" | "Date";
   order: "asc" | "desc";
 }
 
@@ -28,7 +28,7 @@ export const FiltersContext = createContext<FiltersContextData>(
 export function FiltersProvider({ children }: FiltersContextProps) {
   const [filters, setFilters] = useState<Filters>({ date: "", views: 0 });
   const [sortBy, setSortBy] = useState<SortBy>({
-    label: "views",
+    label: "Views",
     order: "desc",
   });
   return (
