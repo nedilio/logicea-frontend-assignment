@@ -33,6 +33,7 @@ const limits = [
 
 function Jokes() {
   const [jokes, setJokes] = useState<Joke[]>([]);
+  // const { filterJokes } = useFilters();
   const [page, setPage] = useState<number>(1);
   const [limit, setLimit] = useState<{
     label: string;
@@ -49,7 +50,7 @@ function Jokes() {
     if (!window.localStorage.getItem("Token")) {
       setLocation("/");
     }
-  }, []);
+  });
 
   return (
     <main>
@@ -73,6 +74,7 @@ function Jokes() {
         <Table className="mt-5">
           <TableHead>
             <TableRow>
+              <TableHeaderCell>ID</TableHeaderCell>
               <TableHeaderCell>Title</TableHeaderCell>
               <TableHeaderCell>Author</TableHeaderCell>
               <TableHeaderCell>Created Date</TableHeaderCell>
@@ -80,12 +82,21 @@ function Jokes() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {jokes.map((joke) => (
+            {jokes?.map((joke) => (
               <TableRow key={joke.id}>
+                <TableCell>
+                  <Text>{joke.id}</Text>
+                </TableCell>
                 <TableCell>
                   <Link href={`/joke/${joke.id}`}>
                     <a>{joke.Title}</a>
                   </Link>
+                  <Text
+                    className="mt-2 text-xs max-w-xs whitespace-break-spaces"
+                    color="gray"
+                  >
+                    {JSON.stringify(joke)}
+                  </Text>
                 </TableCell>
                 <TableCell>
                   <Text>{joke.Author}</Text>
@@ -109,9 +120,23 @@ function Jokes() {
           </TableBody>
         </Table>
         <div className="flex justify-between mt-5">
-          <Button onClick={() => setPage(page - 1)}>{"<"}</Button>
+          <Button
+            disabled={page === 1}
+            onClick={() => {
+              setPage(page - 1);
+            }}
+          >
+            {"<"}
+          </Button>
           <Text>Page {page}</Text>
-          <Button onClick={() => setPage(page + 1)}>{">"}</Button>
+          <Button
+            disabled={jokes.length < limit.value}
+            onClick={() => {
+              setPage(page + 1);
+            }}
+          >
+            {">"}
+          </Button>
         </div>
       </Card>
     </main>
