@@ -4,14 +4,14 @@ import { useEffect } from "react";
 import { login } from "../services";
 
 const Login = () => {
-  const [location, setLocation] = useLocation();
+  const [, setLocation] = useLocation();
   useEffect(() => {
     const token = window.localStorage.getItem("Token");
     console.log(token);
     if (token) {
       setLocation("/jokes");
     }
-  }, []);
+  });
 
   return (
     <div>
