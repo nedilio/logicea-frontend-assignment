@@ -4,6 +4,7 @@ export async function getJokes(page: number, limit: number): Promise<Joke[]> {
   const data = await fetch(
     `https://retoolapi.dev/zu9TVE/jokes?_page=${page}&_limit=${limit}`
   ).then((response) => response.json());
+
   const jokes = data.map((joke: Joke) => {
     const { id, Author, Body, CreatedAt, Title, Views } = joke;
     return {
