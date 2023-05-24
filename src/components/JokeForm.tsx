@@ -26,10 +26,10 @@ const JokeForm = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const CreatedAt = new Date().toISOString();
+    const CreatedAt = Date.now();
     joke.Author === "" || joke.Body === "" || joke.Title === ""
       ? alert("Please fill out all the fields")
-      : createJoke({ ...joke, CreatedAt, Views: "0" });
+      : createJoke({ ...joke, CreatedAt, Views: 0 });
   };
 
   return (

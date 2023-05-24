@@ -1,8 +1,8 @@
 ﻿export interface Joke {
   Author: string;
   Body: string;
-  CreatedAt: string;
+  CreatedAt: number;
   Title: string;
-  Views: string;
+  Views: number;
   id: number;
 }

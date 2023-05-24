@@ -11,9 +11,9 @@ export async function getJokes(page: number, limit: number): Promise<Joke[]> {
       id,
       Author: !Author || Author === "" ? "No Author*" : Author,
       Body: !Body || Body === "" ? "No Body*" : Body,
-      CreatedAt: !CreatedAt || CreatedAt === "" ? "2022-01-01" : CreatedAt,
+      CreatedAt: !CreatedAt || typeof CreatedAt === "string" ? 0 : CreatedAt,
       Title: !Title || Title === "" ? "No Title*" : Title,
-      Views: !Views || Views === "" ? "0" : Views,
+      Views: !Views || typeof Views === "string" ? "0" : Views,
     };
   });
   return jokes;
