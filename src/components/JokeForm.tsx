@@ -2,7 +2,7 @@
 import { useRoute, Link, useLocation } from "wouter";
 import { createJoke, deleteJoke, getJokeById, updateJoke } from "../services";
 import { Joke } from "../types";
-import { Button } from "@tremor/react";
+import { Button, Card, Text, TextInput } from "@tremor/react";
 
 const JokeForm = () => {
   const [, setLocation] = useLocation();
@@ -63,36 +63,46 @@ const JokeForm = () => {
   return (
     <div>
       <Link href="/jokes">
-        <a className="py-2 text-blue-500 hover:underline hover:underline-offset-2">
-          🔙Back to Jokes
+        <a className="bg-red-500 hover:bg-red-700 text-white text-sm font-semibold  py-2 px-4 rounded">
+          ❌Close
         </a>
       </Link>
-      <h1>{params?.id ? `Edit ${joke?.Title}` : "Add new Joke"}</h1>
-      {params?.id && <Button onClick={handleDeleteJoke}>Delete Joke</Button>}
-      <form onSubmit={params?.id ? handleSubmit : handleSubmit}>
-        <label htmlFor="Title">Title</label>
-        <input
-          type="text"
-          name="Title"
-          value={joke?.Title}
-          onChange={(e) => setJoke({ ...joke, Title: e.target.value })}
-        />
-        <label htmlFor="Body">Body</label>
-        <input
-          type="text"
-          name="Body"
-          value={joke?.Body}
-          onChange={(e) => setJoke({ ...joke, Body: e.target.value })}
-        />
-        <label htmlFor="Author">Author</label>
-        <input
-          type="text"
-          name="Author"
-          value={joke?.Author}
-          onChange={(e) => setJoke({ ...joke, Author: e.target.value })}
-        />
-        <Button>Submit</Button>
-      </form>
+
+      <Card>
+        <Text>{params?.id ? `Edit ${joke?.Title}` : "Add new Joke"}</Text>
+        <form onSubmit={params?.id ? handleSubmit : handleSubmit}>
+          <label htmlFor="Title">Title</label>
+          <TextInput
+            type="text"
+            name="Title"
+            placeholder="joke title"
+            value={joke?.Title}
+            onChange={(e) => setJoke({ ...joke, Title: e.target.value })}
+          />
+          <label htmlFor="Body">Body</label>
+          <TextInput
+            type="text"
+            name="Body"
+            placeholder="joke body"
+            value={joke?.Body}
+            onChange={(e) => setJoke({ ...joke, Body: e.target.value })}
+          />
+          <label htmlFor="Author">Author</label>
+          <TextInput
+            type="text"
+            name="Author"
+            placeholder="joke author"
+            value={joke?.Author}
+            onChange={(e) => setJoke({ ...joke, Author: e.target.value })}
+          />
+          <Button>Submit</Button>
+        </form>
+      </Card>
+      {params?.id && (
+        <Button color="red" onClick={handleDeleteJoke}>
+          Delete Joke
+        </Button>
+      )}
       <footer className="text-xs text-gray-500 absolute bottom-2 bg-black p-2 rounded-3xl">
         Joke {JSON.stringify(joke)}
       </footer>

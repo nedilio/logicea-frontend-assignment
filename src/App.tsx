@@ -2,26 +2,31 @@
 import Jokes from "./components/Table";
 import Login from "./components/Login";
 import JokeForm from "./components/JokeForm";
-import { FiltersProvider } from "./context/filters";
+import { useContext } from "react";
+import { ThemeContext, ThemeContextProvider } from "./context/theme";
 
 const App = () => {
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  console.log(theme);
   return (
     <>
-      <Route path="/">
-        <Login />
-      </Route>
+      <ThemeContextProvider>
+        <div data-theme={theme}>
+          <Route path="/">
+            <Login />
+          </Route>
 
-      <FiltersProvider>
-        <Route path="/jokes">
-          <Jokes />
-        </Route>
-      </FiltersProvider>
-      <Route path="/joke/:id">
-        <JokeForm />
-      </Route>
-      <Route path="/joke">
-        <JokeForm />
-      </Route>
+          <Route path="/jokes">
+            <Jokes />
+          </Route>
+          <Route path="/joke/:id">
+            <JokeForm />
+          </Route>
+          <Route path="/joke">
+            <JokeForm />
+          </Route>
+        </div>
+      </ThemeContextProvider>
     </>
   );
 };
