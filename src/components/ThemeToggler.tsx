@@ -13,7 +13,7 @@ const ThemeToggler = ({ children }: { children: React.ReactNode }) => {
       <Button className="mb-2" onClick={() => toggleTheme(theme)}>
         Toggle theme : {theme}
       </Button>
-      {children}
+      <div className="container mx-auto">{children}</div>
     </div>
   );
 };

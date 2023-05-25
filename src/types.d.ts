@@ -11,3 +11,9 @@ export interface ThemeContextType {
   theme: Theme;
   toggleTheme: (theme: Theme) => void;
 }
+
+export interface FiltersContextType {
+  dateRange: DateRangePickerValue;
+  setDateRange: React.Dispatch<React.SetStateAction<DateRangePickerValue>>;
+  dateFilter: string;
+}

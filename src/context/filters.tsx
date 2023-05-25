@@ -1,38 +1,35 @@
-﻿import { createContext, useState } from "react";
+﻿import { createContext, useEffect, useState } from "react";
+import { FiltersContextType } from "../types";
+import { DateRangePickerValue } from "@tremor/react";
 
 interface FiltersContextProps {
   children: React.ReactNode;
 }
 
-interface FiltersContextData {
-  filters: Filters;
-  sortBy: SortBy;
-  setFilters: React.Dispatch<React.SetStateAction<Filters>>;
-  setSortBy: React.Dispatch<React.SetStateAction<SortBy>>;
-}
-
-interface Filters {
-  date: string;
-  views: number;
-}
-
-interface SortBy {
-  label: "Views" | "Date";
-  order: "asc" | "desc";
-}
-
-export const FiltersContext = createContext<FiltersContextData>(
-  {} as FiltersContextData
-);
+export const FiltersContext = createContext<FiltersContextType | null>(null);
 
 export function FiltersProvider({ children }: FiltersContextProps) {
-  const [filters, setFilters] = useState<Filters>({ date: "", views: 0 });
-  const [sortBy, setSortBy] = useState<SortBy>({
-    label: "Views",
-    order: "desc",
-  });
+  const [dateRange, setDateRange] = useState<DateRangePickerValue>([
+    new Date(0),
+    new Date(Date.now()),
+  ]);
+  const [dateFilter, setDateFilter] = useState<string>(
+    `CreatedAt_gte=${0}&CreatedAt_lte=${Date.now()}`
+  );
+  console.log(dateRange);
+
+  useEffect(() => {
+    const [low, high] = dateRange;
+    console.log(low, high);
+    const lowNumber = low?.getTime() || 0;
+    const highNumber =
+      high?.getTime() ||
+      (new Date().getTime() > lowNumber ? lowNumber : new Date().getTime());
+    setDateFilter(`CreatedAt_gte=${lowNumber}&CreatedAt_lte=${highNumber}`);
+  }, [dateRange]);
+
   return (
-    <FiltersContext.Provider value={{ filters, setFilters, sortBy, setSortBy }}>
+    <FiltersContext.Provider value={{ dateRange, setDateRange, dateFilter }}>
       {children}
     </FiltersContext.Provider>
   );

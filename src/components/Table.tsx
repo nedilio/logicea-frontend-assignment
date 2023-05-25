@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getJokes, logout } from "../services";
-import { Joke } from "../types";
+import { FiltersContextType, Joke } from "../types";
 import { useLocation, Link } from "wouter";
 
 import {
@@ -11,7 +11,10 @@ import {
   SelectBox,
   SelectBoxItem,
   Flex,
+  DateRangePicker,
+  DateRangePickerValue,
 } from "@tremor/react";
+import { FiltersContext } from "../context/filters";
 
 const jokeColor = (views: number) => {
   if (views <= 25) return "red";
@@ -26,6 +29,9 @@ const limits = [
 ];
 
 function Jokes() {
+  const { dateRange, setDateRange, dateFilter } = useContext(
+    FiltersContext
+  ) as FiltersContextType;
   const [jokes, setJokes] = useState<Joke[]>([]);
   // const { filterJokes } = useFilters();
   const [page, setPage] = useState<number>(1);
@@ -37,8 +43,8 @@ function Jokes() {
   const [, setLocation] = useLocation();
 
   useEffect(() => {
-    getJokes(page, limit.value).then((jokes) => setJokes(jokes));
-  }, [page, limit]);
+    getJokes(page, limit.value, dateFilter).then((jokes) => setJokes(jokes));
+  }, [page, limit, dateFilter]);
 
   useEffect(() => {
     if (!window.localStorage.getItem("Token")) {
@@ -64,6 +70,14 @@ function Jokes() {
           <Button color="red" onClick={handleLogout}>
             Logout
           </Button>
+        </Flex>
+        <Flex>
+          <DateRangePicker
+            className="max-w-sm mx-auto"
+            enableDropdown={false}
+            value={dateRange}
+            onValueChange={setDateRange}
+          />
         </Flex>
         <h2>Jokes per page</h2>
         <SelectBox
@@ -101,7 +115,10 @@ function Jokes() {
             </thead>
             <tbody>
               {jokes.map((joke) => (
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <tr
+                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                  key={joke.id}
+                >
                   <th
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"

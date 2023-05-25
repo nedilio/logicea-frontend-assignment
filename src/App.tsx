@@ -4,6 +4,7 @@ import Login from "./components/Login";
 import JokeForm from "./components/JokeForm";
 import ThemeToggler from "./components/ThemeToggler";
 import { ThemeContextProvider } from "./context/theme";
+import { FiltersProvider } from "./context/filters";
 import "./App.css";
 
 const App = () => {
@@ -15,7 +16,9 @@ const App = () => {
             <Login />
           </Route>
           <Route path="/jokes">
-            <Jokes />
+            <FiltersProvider>
+              <Jokes />
+            </FiltersProvider>
           </Route>
           <Route path="/joke/:id">
             <JokeForm />
