@@ -2,20 +2,17 @@
 import Jokes from "./components/Table";
 import Login from "./components/Login";
 import JokeForm from "./components/JokeForm";
-import { useContext } from "react";
-import { ThemeContext, ThemeContextProvider } from "./context/theme";
+import ThemeToggler from "./components/ThemeToggler";
+import { ThemeContextProvider } from "./context/theme";
 
 const App = () => {
-  const { theme, toggleTheme } = useContext(ThemeContext);
-  console.log(theme);
   return (
     <>
       <ThemeContextProvider>
-        <div data-theme={theme}>
+        <ThemeToggler>
           <Route path="/">
             <Login />
           </Route>
-
           <Route path="/jokes">
             <Jokes />
           </Route>
@@ -25,7 +22,7 @@ const App = () => {
           <Route path="/joke">
             <JokeForm />
           </Route>
-        </div>
+        </ThemeToggler>
       </ThemeContextProvider>
     </>
   );
