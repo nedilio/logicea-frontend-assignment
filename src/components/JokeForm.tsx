@@ -106,9 +106,11 @@ const JokeForm = () => {
           Delete Joke
         </Button>
       )}
-      <footer className="text-xs text-gray-500 absolute bottom-2 bg-black p-2 rounded-3xl">
-        Joke {JSON.stringify(joke)}
-      </footer>
+      {import.meta.env.MODE === "development" && (
+        <footer className="text-xs text-gray-500 absolute bottom-2 bg-black p-2 rounded-3xl">
+          Joke {JSON.stringify(joke)}
+        </footer>
+      )}
     </div>
   );
 };
