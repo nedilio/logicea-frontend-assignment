@@ -2,7 +2,7 @@
 import { useRoute, Link, useLocation } from "wouter";
 import { createJoke, deleteJoke, getJokeById, updateJoke } from "../services";
 import { Joke } from "../types";
-import { Button, Card, Text, TextInput } from "@tremor/react";
+import { Button, Card, TextInput } from "@tremor/react";
 
 const JokeForm = () => {
   const [, setLocation] = useLocation();

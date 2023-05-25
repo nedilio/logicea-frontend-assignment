@@ -5,14 +5,7 @@ import { useLocation, Link } from "wouter";
 
 import {
   Card,
-  Table,
-  TableHead,
-  TableRow,
-  TableHeaderCell,
-  TableBody,
-  TableCell,
   Text,
-  Title,
   Badge,
   Button,
   SelectBox,
