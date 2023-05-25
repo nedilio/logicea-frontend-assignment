@@ -46,6 +46,18 @@ export async function createJoke(joke: Omit<Joke, "id">) {
   return data;
 }
 
+export async function updateJoke(id: number, joke: Omit<Joke, "id">) {
+  const data = await fetch(`https://retoolapi.dev/zu9TVE/jokes/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(joke),
+  }).then((response) => response.json());
+  console.log(data);
+  return data;
+}
+
 export function login() {
   window.localStorage.setItem("Token", "true");
 }

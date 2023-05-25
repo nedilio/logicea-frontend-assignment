@@ -1,35 +1,63 @@
 ﻿import { useEffect, useState } from "react";
-import { useRoute, Link } from "wouter";
-import { createJoke, deleteJoke, getJokeById } from "../services";
+import { useRoute, Link, useLocation } from "wouter";
+import { createJoke, deleteJoke, getJokeById, updateJoke } from "../services";
 import { Joke } from "../types";
 import { Button } from "@tremor/react";
+
 const JokeForm = () => {
+  const [, setLocation] = useLocation();
   const [, params] = useRoute("/joke/:id");
-  const [joke, setJoke] = useState<Omit<Joke, "id" | "CreatedAt" | "Views">>({
+  const [joke, setJoke] = useState<Omit<Joke, "id">>({
     Author: "",
     Body: "",
     Title: "",
+    CreatedAt: 0,
+    Views: 0,
   });
+
   useEffect(() => {
     if (params?.id !== null) {
       getJokeById(Number(params?.id)).then((jokeID) => {
-        console.log(jokeID);
         if (!jokeID?.id) {
-          console.log("no joke found we can navigate to home");
+          console.log("Empty form");
         } else {
-          const { Author, Body, Title } = jokeID;
-          setJoke({ Author, Body, Title });
+          const { Author, Body, Title, CreatedAt, Views } = jokeID;
+          setJoke({ Author, Body, Title, CreatedAt, Views });
         }
       });
     }
   }, [params?.id]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const CreatedAt = Date.now();
+
     joke.Author === "" || joke.Body === "" || joke.Title === ""
       ? alert("Please fill out all the fields")
-      : createJoke({ ...joke, CreatedAt, Views: 0 });
+      : params?.id
+      ? updateJokebyId(Number(params?.id))
+      : createNewJoke(joke);
+  };
+
+  const updateJokebyId = async (id: number) => {
+    const data = await updateJoke(id, joke);
+    if (data.id) {
+      setLocation("/jokes");
+    }
+  };
+
+  const createNewJoke = async (joke: Omit<Joke, "id">) => {
+    const CreatedAt = Date.now();
+    const data = await createJoke({ ...joke, CreatedAt, Views: 0 });
+    if (data.id) {
+      setLocation("/jokes");
+    }
+  };
+
+  const handleDeleteJoke = async () => {
+    const data = await deleteJoke(Number(params?.id));
+    if (data) {
+      setLocation("/jokes");
+    }
   };
 
   return (
@@ -40,12 +68,8 @@ const JokeForm = () => {
         </a>
       </Link>
       <h1>{params?.id ? `Edit ${joke?.Title}` : "Add new Joke"}</h1>
-      {params?.id && (
-        <Button onClick={() => deleteJoke(Number(params.id))}>
-          Delete Joke
-        </Button>
-      )}
-      <form onSubmit={handleSubmit}>
+      {params?.id && <Button onClick={handleDeleteJoke}>Delete Joke</Button>}
+      <form onSubmit={params?.id ? handleSubmit : handleSubmit}>
         <label htmlFor="Title">Title</label>
         <input
           type="text"
