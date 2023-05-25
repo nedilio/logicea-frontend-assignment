@@ -13,10 +13,17 @@ const Login = () => {
     }
   });
 
+  const handleLogin = () => {
+    login();
+    if (window.localStorage.getItem("Token")) {
+      setLocation("/jokes");
+    }
+  };
+
   return (
     <div>
       <h1>Login</h1>
-      <Button onClick={() => login()}>Login</Button>
+      <Button onClick={handleLogin}>Login</Button>
     </div>
   );
 };

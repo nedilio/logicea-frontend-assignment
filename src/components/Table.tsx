@@ -52,11 +52,16 @@ function Jokes() {
     }
   });
 
+  const handleLogout = () => {
+    logout();
+    setLocation("/");
+  };
+
   return (
     <main>
       <Card>
         <Title>Jokes</Title>
-        <Button onClick={() => logout()}>Logout</Button>
+        <Button onClick={handleLogout}>Logout</Button>
         <SelectBox
           onValueChange={(value) =>
             setLimit(limits.find((l) => l.label === value) || limits[0])
