@@ -62,14 +62,17 @@ const JokeForm = () => {
 
   return (
     <div>
-      <Link href="/jokes">
-        <a className="bg-red-500 hover:bg-red-700 text-white text-sm font-semibold  py-2 px-4 rounded">
-          ❌Close
-        </a>
-      </Link>
-
-      <Card>
-        <Text>{params?.id ? `Edit ${joke?.Title}` : "Add new Joke"}</Text>
+      <Card className="dark:bg-gray-800 bg-white shadow-md dark:text-gray-100 text-gray-800 relative">
+        <div className="absolute top-2 right-2">
+          <Link href="/jokes">
+            <a className="bg-red-500 hover:bg-red-700 text-white text-sm font-semibold py-2 px-4 rounded">
+              ❌Close
+            </a>
+          </Link>
+        </div>
+        <h1 className="text-xl">
+          {params?.id ? `Edit ${joke?.Title}` : "Add new Joke"}
+        </h1>
         <form onSubmit={params?.id ? handleSubmit : handleSubmit}>
           <label htmlFor="Title">Title</label>
           <TextInput

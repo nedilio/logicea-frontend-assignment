@@ -4,6 +4,7 @@ import Login from "./components/Login";
 import JokeForm from "./components/JokeForm";
 import ThemeToggler from "./components/ThemeToggler";
 import { ThemeContextProvider } from "./context/theme";
+import "./App.css";
 
 const App = () => {
   return (

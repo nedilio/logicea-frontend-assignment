@@ -9,11 +9,8 @@ const ThemeToggler = ({ children }: { children: React.ReactNode }) => {
   ) as ThemeContextType;
 
   return (
-    <div data-theme={theme}>
-      <Button
-        onClick={() => toggleTheme(theme)}
-        className="absolute top-2 right-2"
-      >
+    <div className="dark:bg-gray-800 bg-gray-200 dark:text-gray-100 text-gray-900 min-h-screen p-8">
+      <Button className="mb-2" onClick={() => toggleTheme(theme)}>
         Toggle theme : {theme}
       </Button>
       {children}
