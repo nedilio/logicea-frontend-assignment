@@ -17,6 +17,7 @@ import {
   Button,
   SelectBox,
   SelectBoxItem,
+  Flex,
 } from "@tremor/react";
 
 const jokeColor = (views: number) => {
@@ -61,7 +62,16 @@ function Jokes() {
     <main>
       <Card>
         <Title>Jokes</Title>
-        <Button onClick={handleLogout}>Logout</Button>
+        <Flex>
+          <Link href="/joke">
+            <a className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-semibold  py-2 px-4 rounded">
+              New Joke
+            </a>
+          </Link>
+          <Button color="red" onClick={handleLogout}>
+            Logout
+          </Button>
+        </Flex>
         <SelectBox
           onValueChange={(value) =>
             setLimit(limits.find((l) => l.label === value) || limits[0])
