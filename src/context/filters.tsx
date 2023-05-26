@@ -23,6 +23,7 @@ export function FiltersProvider({ children }: FiltersContextProps) {
 
   useEffect(() => {
     const [low, high] = dateRange;
+    if (low === null || high === null) return; // control a null value
     const lowNumber = low?.getTime() || 0;
     const highNumber =
       high?.getTime() ||
