@@ -16,20 +16,40 @@ export function FiltersProvider({ children }: FiltersContextProps) {
   const [dateFilter, setDateFilter] = useState<string>(
     `CreatedAt_gte=${0}&CreatedAt_lte=${Date.now()}`
   );
-  console.log(dateRange);
+  const [viewFilter, setViewFilter] = useState<number>(0);
+  const [viewFilterString, setViewFilterString] = useState<string>(
+    `&View_gte=${viewFilter}`
+  );
 
   useEffect(() => {
     const [low, high] = dateRange;
-    console.log(low, high);
     const lowNumber = low?.getTime() || 0;
     const highNumber =
       high?.getTime() ||
       (new Date().getTime() > lowNumber ? lowNumber : new Date().getTime());
-    setDateFilter(`CreatedAt_gte=${lowNumber}&CreatedAt_lte=${highNumber}`);
+    setDateFilter(`&CreatedAt_gte=${lowNumber}&CreatedAt_lte=${highNumber}`);
   }, [dateRange]);
 
+  useEffect(() => {
+    const x = setTimeout(() => {
+      setViewFilterString(`&Views_gte=${viewFilter}`);
+    }, 250);
+    return () => {
+      clearTimeout(x);
+    };
+  }, [viewFilter]);
+
   return (
-    <FiltersContext.Provider value={{ dateRange, setDateRange, dateFilter }}>
+    <FiltersContext.Provider
+      value={{
+        dateRange,
+        setDateRange,
+        dateFilter,
+        viewFilter,
+        setViewFilter,
+        viewFilterString,
+      }}
+    >
       {children}
     </FiltersContext.Provider>
   );

@@ -16,4 +16,7 @@ export interface FiltersContextType {
   dateRange: DateRangePickerValue;
   setDateRange: React.Dispatch<React.SetStateAction<DateRangePickerValue>>;
   dateFilter: string;
+  viewFilter: number;
+  setViewFilter: React.Dispatch<React.SetStateAction<number>>;
+  viewFilterString: string;
 }

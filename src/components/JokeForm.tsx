@@ -12,7 +12,7 @@ const JokeForm = () => {
     Body: "",
     Title: "",
     CreatedAt: 0,
-    Views: 0,
+    Views: Math.floor(Math.random() * 100),
   });
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const JokeForm = () => {
 
   const createNewJoke = async (joke: Omit<Joke, "id">) => {
     const CreatedAt = Date.now();
-    const data = await createJoke({ ...joke, CreatedAt, Views: 0 });
+    const data = await createJoke({ ...joke, CreatedAt });
     if (data.id) {
       setLocation("/jokes");
     }

@@ -3,10 +3,11 @@
 export async function getJokes(
   page: number,
   limit: number,
-  dateFilter: string
+  dateFilter: string,
+  viewFilterString: string
 ): Promise<Joke[]> {
   const data = await fetch(
-    `https://retoolapi.dev/zu9TVE/jokes?_page=${page}&_limit=${limit}&${dateFilter}`
+    `https://retoolapi.dev/zu9TVE/jokes?_page=${page}&_limit=${limit}${dateFilter}${viewFilterString}`
   ).then((response) => response.json());
 
   const jokes = data.map((joke: Joke) => {

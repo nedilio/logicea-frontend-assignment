@@ -28,12 +28,17 @@ const limits = [
 ];
 
 function Jokes() {
-  const { dateRange, setDateRange, dateFilter } = useContext(
-    FiltersContext
-  ) as FiltersContextType;
+  const {
+    dateRange,
+    setDateRange,
+    dateFilter,
+    viewFilter,
+    setViewFilter,
+    viewFilterString,
+  } = useContext(FiltersContext) as FiltersContextType;
   const [jokes, setJokes] = useState<Joke[]>([]);
-  // const { filterJokes } = useFilters();
   const [page, setPage] = useState<number>(1);
+
   const [limit, setLimit] = useState<{
     label: string;
     value: number;
@@ -42,8 +47,10 @@ function Jokes() {
   const [, setLocation] = useLocation();
 
   useEffect(() => {
-    getJokes(page, limit.value, dateFilter).then((jokes) => setJokes(jokes));
-  }, [page, limit, dateFilter]);
+    getJokes(page, limit.value, dateFilter, viewFilterString).then((jokes) =>
+      setJokes(jokes)
+    );
+  }, [page, limit, dateFilter, viewFilterString]);
 
   useEffect(() => {
     if (!window.localStorage.getItem("Token")) {
@@ -71,12 +78,31 @@ function Jokes() {
           </Button>
         </Flex>
         <Flex>
-          <DateRangePicker
-            className="max-w-sm mx-auto"
-            enableDropdown={false}
-            value={dateRange}
-            onValueChange={setDateRange}
-          />
+          <div>
+            <p>Date Range Filter</p>
+            <DateRangePicker
+              className="max-w-sm mx-auto"
+              enableDropdown={false}
+              value={dateRange}
+              onValueChange={setDateRange}
+            />
+          </div>
+          <div className="relative">
+            <p>Views filter</p>
+            <p>more than {viewFilter} views</p>
+            <input
+              type="range"
+              name="views"
+              id="views"
+              min={0}
+              max={100}
+              value={viewFilter}
+              onChange={(e) => {
+                console.log(parseInt(e.target.value));
+                setViewFilter(parseInt(e.target.value));
+              }}
+            />
+          </div>
         </Flex>
         <h2>Jokes per page</h2>
         <SelectBox
