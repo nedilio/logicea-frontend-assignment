@@ -6,27 +6,25 @@ import { Button, Card, TextInput } from "@tremor/react";
 
 const JokeForm = () => {
   const [, setLocation] = useLocation();
-  const [, params] = useRoute("/joke/:id");
+  const [match, params] = useRoute("/joke/:id");
   const [joke, setJoke] = useState<Omit<Joke, "id">>({
     Author: "",
     Body: "",
     Title: "",
     CreatedAt: 0,
-    Views: Math.floor(Math.random() * 100),
+    Views: Math.floor(Math.random() * 100), //to create random number of views
   });
 
   useEffect(() => {
-    if (params?.id !== null) {
-      getJokeById(Number(params?.id)).then((jokeID) => {
-        if (!jokeID?.id) {
-          console.log("Empty form");
-        } else {
-          const { Author, Body, Title, CreatedAt, Views } = jokeID;
+    if (match) {
+      getJokeById(Number(params?.id)).then((joke) => {
+        if (joke?.id) {
+          const { Author, Body, Title, CreatedAt, Views } = joke;
           setJoke({ Author, Body, Title, CreatedAt, Views });
         }
       });
     }
-  }, [params?.id]);
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

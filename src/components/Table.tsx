@@ -91,7 +91,7 @@ function Jokes() {
           </div>
           <div className="relative">
             <p>Views filter</p>
-            <p>more than {viewFilter} views</p>
+            <p>from {viewFilter} views ⬆</p>
             <input
               type="range"
               name="views"
@@ -100,7 +100,6 @@ function Jokes() {
               max={100}
               value={viewFilter}
               onChange={(e) => {
-                console.log(parseInt(e.target.value));
                 setViewFilter(parseInt(e.target.value));
               }}
             />
