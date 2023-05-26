@@ -6,7 +6,6 @@ import { useLocation, Link } from "wouter";
 import {
   Card,
   Text,
-  Badge,
   Button,
   SelectBox,
   SelectBoxItem,
@@ -14,12 +13,14 @@ import {
   DateRangePicker,
 } from "@tremor/react";
 import { FiltersContext } from "../context/filters";
+import Badge from "./Badge";
 
 const jokeColor = (views: number) => {
-  if (views <= 25) return "red";
+  if (views <= 25) return "tomato";
   if (views <= 50) return "orange";
   if (views <= 75) return "yellow";
   if (views <= 100) return "green";
+  return "blue";
 };
 
 const limits = [
@@ -36,6 +37,7 @@ function Jokes() {
     setViewFilter,
     viewFilterString,
   } = useContext(FiltersContext) as FiltersContextType;
+
   const [jokes, setJokes] = useState<Joke[]>([]);
   const [page, setPage] = useState<number>(1);
 
