@@ -9,7 +9,7 @@ const Badge = ({ color, children }: BadgeProps) => {
         style={{ backgroundColor: color, opacity: 0.3 }}
         className="rounded-full px-2 py-1 text-xs text-center h-7"
       ></div>
-      <span className="absolute block top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-gray-200 font-bold">
+      <span className="absolute block top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] dark:text-gray-200 text-gray-500 font-semibold">
         {children}
       </span>
     </div>
