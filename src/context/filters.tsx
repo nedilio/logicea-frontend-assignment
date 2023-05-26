@@ -18,7 +18,7 @@ export function FiltersProvider({ children }: FiltersContextProps) {
   );
   const [viewFilter, setViewFilter] = useState<number>(0);
   const [viewFilterString, setViewFilterString] = useState<string>(
-    `&View_gte=${viewFilter}`
+    `&Views_gte=${viewFilter}`
   );
 
   useEffect(() => {
