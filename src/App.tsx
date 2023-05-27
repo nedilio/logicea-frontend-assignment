@@ -6,6 +6,7 @@ import ThemeToggler from "./components/ThemeToggler";
 import { ThemeContextProvider } from "./context/theme";
 import { FiltersProvider } from "./context/filters";
 import "./App.css";
+import { SortContextProvider } from "./context/sortContext";
 
 const App = () => {
   return (
@@ -17,7 +18,9 @@ const App = () => {
           </Route>
           <Route path="/jokes">
             <FiltersProvider>
-              <Jokes />
+              <SortContextProvider>
+                <Jokes />
+              </SortContextProvider>
             </FiltersProvider>
           </Route>
           <Route path="/joke/:id">

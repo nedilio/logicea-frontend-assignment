@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { getJokes, logout } from "../services";
-import { FiltersContextType, Joke } from "../types";
+import { FiltersContextType, Joke, SortContextType } from "../types";
 import { useLocation, Link } from "wouter";
 
 import {
@@ -14,6 +14,7 @@ import {
 } from "@tremor/react";
 import { FiltersContext } from "../context/filters";
 import Badge from "./Badge";
+import { SortContext } from "../context/sortContext";
 
 const jokeColor = (views: number) => {
   if (views <= 25) return "tomato";
@@ -38,6 +39,10 @@ function Jokes() {
     viewFilterString,
   } = useContext(FiltersContext) as FiltersContextType;
 
+  const { sort, setSort, sortString } = useContext(
+    SortContext
+  ) as SortContextType;
+
   const [jokes, setJokes] = useState<Joke[]>([]);
   const [page, setPage] = useState<number>(1);
 
@@ -49,10 +54,10 @@ function Jokes() {
   const [, setLocation] = useLocation();
 
   useEffect(() => {
-    getJokes(page, limit.value, dateFilter, viewFilterString).then((jokes) =>
-      setJokes(jokes)
+    getJokes(page, limit.value, dateFilter, viewFilterString, sortString).then(
+      (jokes) => setJokes(jokes)
     );
-  }, [page, limit, dateFilter, viewFilterString]);
+  }, [page, limit, dateFilter, viewFilterString, sortString]);
 
   useEffect(() => {
     if (!window.localStorage.getItem("Token")) {
@@ -63,6 +68,17 @@ function Jokes() {
   const handleLogout = () => {
     logout();
     setLocation("/");
+  };
+
+  const handleSortByViews = () => {
+    const { order } = sort;
+    const neworder = order === null ? "asc" : order === "asc" ? "desc" : null;
+    setSort({ ...sort, label: "Views", order: neworder });
+  };
+  const handleSortByDate = () => {
+    const { order } = sort;
+    const neworder = order === null ? "asc" : order === "asc" ? "desc" : null;
+    setSort({ ...sort, label: "CreatedAt", order: neworder });
   };
 
   return (
@@ -132,10 +148,25 @@ function Jokes() {
                   Author
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Created At
+                  <button onClick={handleSortByDate}>
+                    Created At
+                    <span>
+                      {sort.label === "CreatedAt" &&
+                        sort.order !== null &&
+                        (sort.order === "asc" ? " ⬆" : " ⬇")}
+                    </span>
+                  </button>
                 </th>
+
                 <th scope="col" className="px-6 py-3">
-                  Views
+                  <button onClick={handleSortByViews}>
+                    Views
+                    <span>
+                      {sort.label === "Views" &&
+                        sort.order !== null &&
+                        (sort.order === "asc" ? " ⬆" : " ⬇")}
+                    </span>
+                  </button>
                 </th>
               </tr>
             </thead>

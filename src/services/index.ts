@@ -4,10 +4,14 @@ export async function getJokes(
   page: number,
   limit: number,
   dateFilter: string,
-  viewFilterString: string
+  viewFilterString: string,
+  sortString: string
 ): Promise<Joke[]> {
+  console.log(
+    `https://retoolapi.dev/zu9TVE/jokes?_page=${page}&_limit=${limit}${dateFilter}${viewFilterString}${sortString}`
+  );
   const data = await fetch(
-    `https://retoolapi.dev/zu9TVE/jokes?_page=${page}&_limit=${limit}${dateFilter}${viewFilterString}`
+    `https://retoolapi.dev/zu9TVE/jokes?_page=${page}&_limit=${limit}${dateFilter}${viewFilterString}${sortString}`
   ).then((response) => response.json());
 
   const jokes = data.map((joke: Joke) => {

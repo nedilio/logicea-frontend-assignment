@@ -20,3 +20,14 @@ export interface FiltersContextType {
   setViewFilter: React.Dispatch<React.SetStateAction<number>>;
   viewFilterString: string;
 }
+
+export type Sort = {
+  label: "CreatedAt" | "Views" | null;
+  order: "asc" | "desc" | null;
+};
+
+export interface SortContextType {
+  sort: Sort;
+  setSort: React.Dispatch<React.SetStateAction<Sort>>;
+  sortString: string;
+}
